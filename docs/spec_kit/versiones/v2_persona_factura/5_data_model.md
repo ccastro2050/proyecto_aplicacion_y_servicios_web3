@@ -63,7 +63,7 @@ Los 4 SPs retornan su resultado como **JSON** en el parámetro
 | SP | Parámetros | Qué hace | Errores (`THROW`) |
 |---|---|---|---|
 | `sp_listar_facturas_y_productosporfactura` | `@p_resultado OUT` | Array de facturas, cada una con nombres de cliente/vendedor y su detalle anidado | — |
-| `sp_consultar_factura_y_productosporfactura` | `@p_numero`, `@p_resultado OUT` | `{factura:{…}, productos:[…]}` de UNA factura | 50010 «Factura N no existe» |
+| `sp_consultar_factura_y_productosporfactura` | `@p_numero`, `@p_resultado OUT` | `{factura:{…}, productos:[…]}` de UNA factura (la API lo aplana: UNA factura con `productos` adentro) | **50003** «Factura N no existe» |
 | `sp_insertar_factura_y_productosporfactura` | `@p_fkidcliente`, `@p_fkidvendedor`, `@p_productos` (JSON), `@p_minimo_detalle=1`, `@p_resultado OUT` | Transacción completa: inserta el encabezado, abre el JSON con OPENJSON e inserta cada renglón (el trigger calcula todo) | 50002 «requiere mínimo N producto(s)»; los del trigger (stock); FK del motor |
 | `sp_anular_factura` | `@p_numero`, `@p_resultado OUT` | Borrado lógico: restaura stock y pone `estado='anulada'` | 50010 «no existe» · 50010 «ya está anulada» |
 

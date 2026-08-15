@@ -158,7 +158,7 @@ más carpetas de componentes (y el compose crecerá con ellas).
 
 ```
 v1  api_facturas (C#/ASP.NET Core): CRUD de producto, solo SQL Server   (cerrada: tag v1)
-v2  persona (el molde replicado) + factura maestro-detalle con SPs   ← USTED ESTÁ AQUÍ
+v2  persona (el molde replicado) + factura maestro-detalle con SPs   ← USTED ESTÁ AQUÍ (cerrada: tag v2)
 v3  segundo motor (PostgreSQL) — nace la fábrica de repositorios
 v4  tercer motor (MariaDB) + compose completo
 v5  API GENÉRICA de plataforma: /api/{tabla} multi-motor + JWT +

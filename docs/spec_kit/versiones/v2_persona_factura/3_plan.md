@@ -103,9 +103,9 @@ en **422** antes del controlador. (El SP tiene su propio mínimo con
 
 ```csharp
 Task<List<Factura>> ListarAsync();            // sp_listar_facturas_y_productosporfactura
-Task<Factura> ConsultarAsync(int numero);     // sp_consultar_factura_y_productosporfactura
-Task<FacturaCreada> CrearAsync(int fkidcliente, int fkidvendedor, string productosJson);
-Task<FacturaAnulada> AnularAsync(int numero); // sp_anular_factura
+Task<Factura> ConsultarAsync(int numero);     // sp_consultar (el sobre {factura, productos} se APLANA a una Factura)
+Task<Factura> CrearAsync(int fkidcliente, int fkidvendedor, string productosJson);
+Task<string> AnularAsync(int numero);         // sp_anular_factura — su JSON se re-emite tal cual
 ```
 
 Patrón de llamada (igual en los 4):
@@ -127,10 +127,14 @@ petición ya validada.
 
 ### 3.4 Los THROW del SP se traducen a excepciones de negocio
 
+Números reales de `db/bdfacturas.sql`: **50003** = el "no existe" de
+`sp_consultar` · **50010** = los dos errores de `sp_anular`:
+
 ```csharp
-catch (SqlException ex) when (ex.Number == 50010 && ex.Message.Contains("no existe"))
+catch (SqlException ex) when ((ex.Number == 50003 || ex.Number == 50010)
+                              && ex.Message.Contains("no existe"))
     { throw new NoEncontradoExcepcion(ex.Message); }        // → 404
-catch (SqlException ex) when (ex.Number == 50010 && ex.Message.Contains("ya está anulada"))
+catch (SqlException ex) when (ex.Number == 50010 && ex.Message.Contains("anulada"))
     { throw new ConflictoExcepcion(ex.Message); }           // → 409
 // Cualquier otro SqlException (stock insuficiente del trigger, FK) sube tal
 // cual y el controller lo vuelve 500 con el mensaje en `detalle`.
@@ -140,8 +144,10 @@ detalle de datos, no de negocio ni de HTTP.
 
 ### 3.5 Servicio y controller de factura
 
-`ServicioFactura`: valida `numero > 0`, serializa los renglones de la
-petición a JSON para el repo, y **no calcula nada** (RNF2).
+`ServicioFactura`: valida `numero > 0` y **no calcula nada** (RNF2). El
+JSON de renglones para el SP lo arma el **controller** desde la petición ya
+validada (lista blanca `codigo`/`cantidad`) — así el servicio no conoce las
+clases de `Peticiones/`, igual que en el molde de la v1.
 `FacturaController` (`[Route("api/factura")]`): 4 métodos con el try/catch
 de siempre + una fila nueva en la tabla de traducción:
 `ConflictoExcepcion → 409`.

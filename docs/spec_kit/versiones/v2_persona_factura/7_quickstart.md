@@ -44,7 +44,7 @@ curl.exe -i -X DELETE http://localhost:8032/api/persona/P001          # → 500 
 
 # ── 3. FACTURA: lecturas maestro-detalle (SPs) ────────────────────────
 curl.exe http://localhost:8032/api/factura                    # 6 facturas con nombres y detalle
-curl.exe http://localhost:8032/api/factura/1                  # {factura:{...}, productos:[...]}
+curl.exe http://localhost:8032/api/factura/1                  # la factura con nombres y productos:[...] adentro
 curl.exe -i http://localhost:8032/api/factura/999             # → 404
 
 # ── 4. CREAR FACTURA: el trigger trabaja ──────────────────────────────

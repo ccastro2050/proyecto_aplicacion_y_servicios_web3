@@ -118,9 +118,9 @@ pie de la letra; solo cambia `"version": "v2"` en el diagnóstico.
   ni total, ni stock se calculan en la API — si un número sale mal, el bug
   se busca en la BD, no en el servicio.
 - **RNF3 — Los errores de la BD también son contrato:** el repositorio de
-  factura traduce los `THROW` de los SPs (50010 "no existe" → 404 · "ya
-  está anulada" → 409) — los códigos de error del motor son parte de la
-  interfaz con la BD.
+  factura traduce los `THROW` de los SPs (50003/50010 "no existe" → 404 ·
+  50010 "ya está anulada" → 409) — los códigos de error del motor son
+  parte de la interfaz con la BD.
 - **RNF4 — Sin anticipación:** nada de fábricas ni motores nuevos (v3).
 
 ## 5. Criterios de aceptación

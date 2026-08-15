@@ -58,9 +58,16 @@ los JOINs los hizo el SP, no la API.
 
 ### B2. `GET /api/factura/{numero}` — Consultar una (SP consultar)
 
+La respuesta tiene **la misma forma que cada elemento del listado** (el SP
+devuelve el sobre `{factura, productos}` y la API lo aplana — una sola
+forma de factura en toda la API):
+
 ```
 GET /api/factura/1
-→ 200 { "factura": { …como arriba… }, "productos": [ … ] }
+→ 200 { "numero":1, "fecha":"…", "total":5000000.00, "estado":"activa",
+        "fkidcliente":1, "nombre_cliente":"Ana Torres",
+        "fkidvendedor":1, "nombre_vendedor":"Carlos Pérez",
+        "productos":[ … ] }
 
 GET /api/factura/999
 → 404 {estado:404, mensaje:"Factura no encontrada.", detalle:"Factura 999 no existe"}
@@ -77,9 +84,9 @@ Body (petición `FacturaCrear`):
 ```
 
 ```
-→ 200  el JSON del SP: la factura creada con fecha, estado "activa",
-       subtotales POR RENGLÓN y total — todo calculado por el trigger.
-       La API nunca recibió ni calculó un solo valor monetario.
+→ 200  la factura creada, con la MISMA forma del B2: fecha, estado
+       "activa", subtotales POR RENGLÓN y total — todo calculado por el
+       trigger. La API nunca recibió ni calculó un solo valor monetario.
 
 → 422  productos:[] o ausente · cantidad 0 o negativa · codigo vacío
        (la petición: [MinLength(1)], [Range(1,…)], [Required])
