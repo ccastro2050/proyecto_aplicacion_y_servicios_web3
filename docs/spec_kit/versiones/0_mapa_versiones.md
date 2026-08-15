@@ -6,8 +6,8 @@
 
 | Versión | Qué agrega | Estado |
 |---|---|---|
-| **v1** | `api_facturas` (C#/ASP.NET Core): CRUD completo de `producto` contra **SQL Server** — capas + interfaces + peticiones por verbo | **En curso** ([spec](v1_producto_sqlserver/2_spec.md)) |
-| v2 | Más entidades (persona, factura maestro-detalle…) aprovechando los triggers y SPs de la BD | Sin especificar |
+| **v1** | `api_facturas` (C#/ASP.NET Core): CRUD completo de `producto` contra **SQL Server** — capas + interfaces + peticiones por verbo | **Cerrada** — tag `v1` ([spec](v1_producto_sqlserver/2_spec.md)) |
+| **v2** | `persona` (el molde de la v1 replicado) y `factura` **maestro-detalle** aprovechando los triggers y SPs de la BD (crear, consultar, listar, anular) | **En curso** ([spec](v2_persona_factura/2_spec.md)) |
 | v3 | Segundo motor (**PostgreSQL**) — nace la fábrica de repositorios real | Sin especificar |
 | v4 | Tercer motor (**MariaDB**) + compose completo | Sin especificar |
 | v5 | **API genérica de plataforma**: CRUD sobre CUALQUIER tabla (`/api/{tabla}` con filas como diccionario columna→valor descubierto en runtime), selección de motor por configuración, **autenticación JWT**, encriptación BCrypt de campos, consultas SELECT parametrizadas, ejecución de **procedimientos almacenados** y exploración de estructuras de la BD | Sin especificar |
