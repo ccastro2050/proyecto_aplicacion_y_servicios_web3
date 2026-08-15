@@ -38,12 +38,15 @@ curl.exe -i -X POST http://localhost:8032/api/ruta -H "Content-Type: application
 # ── 3. LA CADENA COMERCIAL COMPLETA (v3 alimentando a la v2) ─────────
 curl.exe -X POST http://localhost:8032/api/persona -H "Content-Type: application/json" -d "{\"codigo\":\"P010\",\"nombre\":\"Cliente Nuevo\",\"email\":\"cn@correo.com\",\"telefono\":\"3010101010\"}"
 curl.exe -X POST http://localhost:8032/api/cliente -H "Content-Type: application/json" -d "{\"fkcodpersona\":\"P010\",\"fkcodempresa\":\"E100\",\"credito\":500000}"
-# ← anote el id del cliente nuevo (será 6); cree su vendedor:
+# ← anote el id del cliente nuevo: GET /api/cliente y busque P010 (será 8 —
+#   no 6: los INSERT fallidos del bloque 2 también CONSUMEN identity, aunque
+#   la fila nunca exista; SQL Server no los devuelve). Cree su vendedor:
 curl.exe -X POST http://localhost:8032/api/vendedor -H "Content-Type: application/json" -d "{\"carnet\":1004,\"direccion\":\"Calle 9 #8-70\",\"fkcodpersona\":\"P010\"}"
 # ← anote el id (será 4). Ahora una factura CON ELLOS (¡la v2 en acción!):
-curl.exe -X POST http://localhost:8032/api/factura -H "Content-Type: application/json" -d "{\"fkidcliente\":6,\"fkidvendedor\":4,\"productos\":[{\"codigo\":\"PR004\",\"cantidad\":1}]}"
-# ← anote el numero y anúlela para dejar el stock como estaba:
-curl.exe -X POST http://localhost:8032/api/factura/8/anular
+curl.exe -X POST http://localhost:8032/api/factura -H "Content-Type: application/json" -d "{\"fkidcliente\":8,\"fkidvendedor\":4,\"productos\":[{\"codigo\":\"PR004\",\"cantidad\":1}]}"
+# ← anote el numero y anúlela para dejar el stock como estaba (será 9: la
+#   factura del intento "stock insuficiente" de la v2 también consumió su id):
+curl.exe -X POST http://localhost:8032/api/factura/9/anular
 
 # ── 4. USUARIO: el secreto nunca viaja ───────────────────────────────
 curl.exe http://localhost:8032/api/usuario                    # 8 emails — SIN contraseñas

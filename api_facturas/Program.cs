@@ -48,6 +48,34 @@ builder.Services.AddScoped<IRepositorioFactura>(
     _ => new RepositorioFacturaSqlServer(cadenaConexion));
 builder.Services.AddScoped<IServicioFactura, ServicioFactura>();
 
+// v3 — las 8 rebanadas que completan la BD: el ensamblador crece por
+// última vez "a mano". Nota didáctica: esta lista YA duele — ese dolor
+// es el argumento de la fábrica real que introducirá la v4.
+builder.Services.AddScoped<IRepositorioEmpresa>(
+    _ => new RepositorioEmpresaSqlServer(cadenaConexion));
+builder.Services.AddScoped<IServicioEmpresa, ServicioEmpresa>();
+builder.Services.AddScoped<IRepositorioCliente>(
+    _ => new RepositorioClienteSqlServer(cadenaConexion));
+builder.Services.AddScoped<IServicioCliente, ServicioCliente>();
+builder.Services.AddScoped<IRepositorioVendedor>(
+    _ => new RepositorioVendedorSqlServer(cadenaConexion));
+builder.Services.AddScoped<IServicioVendedor, ServicioVendedor>();
+builder.Services.AddScoped<IRepositorioUsuario>(
+    _ => new RepositorioUsuarioSqlServer(cadenaConexion));
+builder.Services.AddScoped<IServicioUsuario, ServicioUsuario>();
+builder.Services.AddScoped<IRepositorioRol>(
+    _ => new RepositorioRolSqlServer(cadenaConexion));
+builder.Services.AddScoped<IServicioRol, ServicioRol>();
+builder.Services.AddScoped<IRepositorioRuta>(
+    _ => new RepositorioRutaSqlServer(cadenaConexion));
+builder.Services.AddScoped<IServicioRuta, ServicioRuta>();
+builder.Services.AddScoped<IRepositorioRolUsuario>(
+    _ => new RepositorioRolUsuarioSqlServer(cadenaConexion));
+builder.Services.AddScoped<IServicioRolUsuario, ServicioRolUsuario>();
+builder.Services.AddScoped<IRepositorioRutaRol>(
+    _ => new RepositorioRutaRolSqlServer(cadenaConexion));
+builder.Services.AddScoped<IServicioRutaRol, ServicioRutaRol>();
+
 // ------------------------------------------------------------
 // 2. Los controladores y la validación de la petición (el 422)
 // ------------------------------------------------------------
@@ -106,8 +134,8 @@ app.UseSwaggerUI();
 app.MapGet("/", () => Results.Json(new
 {
     mensaje = "API Facturas funcionando",
-    version = "v2",
-    contratos = "docs/spec_kit/versiones/v2_persona_factura/6_contracts.md"
+    version = "v3",
+    contratos = "docs/spec_kit/versiones/v3_resto_entidades/6_contracts.md"
 }));
 
 // MapControllers enciende las rutas declaradas con atributos en los
