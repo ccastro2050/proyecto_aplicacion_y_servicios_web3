@@ -41,18 +41,33 @@ mapa de versiones (la v2 no anticipa la v3).
 
 ### A.2 Prepare su proyecto (5 minutos)
 
-1. **Copie las specs de la v2** desde el clon del curso a SU proyecto:
-   la carpeta `docs\spec_kit\versiones\v2_persona_factura\` completa
-   (los 7 `.md`), quedando al lado de la de la v1.
+Todos los comandos van en la terminal integrada de VS Code (PowerShell),
+**parado en la raíz de SU proyecto**.
 
-2. **Cree los ARCHIVOS VACÍOS nuevos** (las carpetas ya existen de la v1).
-   En la terminal integrada, parado en la raíz de su proyecto:
+1. **Cree la CARPETA nueva** (la única de la v2: la de sus specs — las
+   carpetas de código ya existen todas desde la v1):
+
+   ```powershell
+   mkdir docs\spec_kit\versiones\v2_persona_factura
+   ```
+
+2. **Copie las specs de la v2** desde el clon del curso (los 7 `.md` +
+   esta guía) — ajuste la primera ruta a donde tenga el clon:
+
+   ```powershell
+   Copy-Item ..\proyecto_aplicacion_y_servicios_web2\docs\spec_kit\versiones\v2_persona_factura\* docs\spec_kit\versiones\v2_persona_factura\
+   ```
+
+   (También sirve el explorador de Windows: Ctrl+C, Ctrl+V de la carpeta
+   completa, como en la v1.)
+
+3. **Cree los ARCHIVOS VACÍOS nuevos** — los 18 que la IA irá llenando:
 
    ```powershell
    New-Item api_facturas\Modelos\Persona.cs, api_facturas\Modelos\Factura.cs, api_facturas\Modelos\ProductoDeFactura.cs, api_facturas\Peticiones\PersonaCrear.cs, api_facturas\Peticiones\PersonaReemplazo.cs, api_facturas\Peticiones\PersonaActualizar.cs, api_facturas\Peticiones\FacturaCrear.cs, api_facturas\Controllers\PersonaController.cs, api_facturas\Controllers\FacturaController.cs, api_facturas\Servicios\IServicioPersona.cs, api_facturas\Servicios\ServicioPersona.cs, api_facturas\Servicios\IServicioFactura.cs, api_facturas\Servicios\ServicioFactura.cs, api_facturas\Repositorios\IRepositorioPersona.cs, api_facturas\Repositorios\RepositorioPersonaSqlServer.cs, api_facturas\Repositorios\IRepositorioFactura.cs, api_facturas\Repositorios\RepositorioFacturaSqlServer.cs, api_facturas\Excepciones\ConflictoExcepcion.cs
    ```
 
-3. Sepa desde ya qué archivos de la v1 **CRECEN** (la IA le entregará la
+4. Sepa desde ya qué archivos de la v1 **CRECEN** (la IA le entregará la
    versión completa actualizada y usted REEMPLAZA el contenido):
    `Program.cs` (4 AddScoped nuevos + version "v2") y
    `pruebas/Programa.cs` (el repo falso de persona). **Ningún otro archivo
