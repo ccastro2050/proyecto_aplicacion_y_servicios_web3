@@ -115,22 +115,24 @@ proyecto_aplicacion_y_servicios_web2/
 │                                #   cómo hacer el backup y cómo restaurarlo
 │
 ├── postman/                     # La colección de Postman lista para importar:
-│                                #   los 13 endpoints en orden didáctico (alternativa a Swagger)
+│                                #   los endpoints de v1 + v2 en orden didáctico
 │
-├── api_facturas/                # LA API DE LA v1 — C#/ASP.NET Core (puerto 8032)
+├── api_facturas/                # LA API (v1 + v2) — C#/ASP.NET Core (puerto 8032)
 │   ├── ApiFacturas.csproj       # El proyecto .NET (paquetes: SqlClient y Swashbuckle)
 │   ├── Program.cs               # Punto de entrada: ENSAMBLADOR (DI) + 422 + rutas
 │   ├── appsettings.json         # Cadena de conexión (default localhost,11463)
 │   ├── Dockerfile               # Imagen sdk:10.0 + dotnet watch
-│   ├── Controllers/             # Capa 1 — HTTP: atributos de verbo y try/catch → códigos
-│   ├── Modelos/                 # Los MODELOS = las clases ENTIDAD (v1: Producto)
-│   ├── Peticiones/              # Los body por verbo (Crear/Reemplazo/Actualizar):
-│   │                            #   sus anotaciones validan la entrada → 422
-│   ├── Servicios/               # Capa 2 — negocio: interfaz + reglas
-│   ├── Repositorios/            # Capa 3 — datos: interfaz + ADO.NET/SQL Server
-│   ├── Excepciones/             # NoEncontradoExcepcion (el servicio la lanza → 404)
-│   └── pruebas/                 # Proyecto de consola: el servicio con repositorio
-│                                #   FALSO en memoria (criterio 6, corre sin BD)
+│   ├── Controllers/             # Capa 1 — HTTP: Producto, Persona y Factura (v2)
+│   ├── Modelos/                 # Los MODELOS: Producto, Persona (v2) y Factura +
+│   │                            #   ProductoDeFactura (v2: los arma la BD vía SPs)
+│   ├── Peticiones/              # Los body por verbo → 422; FacturaCrear (v2) valida
+│   │                            #   una LISTA anidada de renglones
+│   ├── Servicios/               # Capa 2 — negocio: interfaces + reglas por entidad
+│   ├── Repositorios/            # Capa 3 — datos: ADO.NET; el de factura (v2) llama
+│   │                            #   PROCEDIMIENTOS ALMACENADOS y traduce sus THROW
+│   ├── Excepciones/             # NoEncontradoExcepcion → 404 · ConflictoExcepcion → 409 (v2)
+│   └── pruebas/                 # Proyecto de consola: producto Y persona con
+│                                #   repositorios FALSOS (criterio 6, corre sin BD)
 ├── docs/
 │   ├── spec_kit/                # LAS ESPECIFICACIONES: constitución permanente +
 │   │                            #   una carpeta por versión con sus 7 .md
@@ -189,7 +191,7 @@ de aceptación (commit + tag). Mapa completo:
 | Documento | Qué cubre |
 |---|---|
 | [El flujo de una petición](docs/FLUJO_DE_UNA_PETICION.md) | **Léalo primero:** dónde está el GET, dónde se captura el POST, y el viaje completo por las capas |
-| [Colección de Postman](postman/README.md) | Los 13 endpoints de la v1 listos para importar y probar con clics — incluida la pareja PUT=422 vs PATCH=200 |
+| [Colección de Postman](postman/README.md) | Las 25 peticiones de v1 + v2 listas para importar y probar con clics — la pareja PUT/PATCH, el error de FK, el trigger calculando y el 409 del doble anular |
 | [SDD y Spec Kit](docs/SDD_SPECKIT.md) | La metodología con la que se trabaja este curso: la spec manda sobre el código |
 | [El paradigma P.O.O. en C#](docs/PARADIGMA_POO.md) | Qué es un paradigma, los 4 pilares, y las propiedades e interfaces de C# |
 | [SOLID y programación por capas](docs/SOLID_Y_CAPAS.md) | Los 5 principios y las capas — y en qué versión se demuestra cada uno |

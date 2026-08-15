@@ -197,6 +197,9 @@ docker compose ps -a             # estado de los servicios (el init debe estar E
 docker compose logs api-facturas # la salida de un servicio (errores incluidos)
 docker compose down [-v]         # apagar todo (-v: borrar también los volúmenes = reset BD)
 docker compose up -d --remove-orphans  # además, borrar contenedores huérfanos (sección 5)
+docker compose restart api-facturas    # reiniciar SOLO la API (si el watch se queda pegado)
+# la prueba de capas (criterio 6) DENTRO del contenedor, sin instalar .NET local:
+docker compose exec api-facturas dotnet run --project pruebas
 ```
 
 ## 8. Referencias
