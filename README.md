@@ -38,16 +38,16 @@ completa en SQL Server) y la API:
 
 | Qué | Dónde |
 |---|---|
-| **API Facturas** — diagnóstico | http://localhost:8032/ |
-| **Swagger** (documentación interactiva: ver y probar los endpoints) | http://localhost:8032/swagger |
-| Listar productos | http://localhost:8032/api/producto |
-| SQL Server (para SQLTools/SSMS, opcional) | `localhost,11463` · `sa`/`Paradigmas123!` |
+| **API Facturas** — diagnóstico | http://localhost:8034/ |
+| **Swagger** (documentación interactiva: ver y probar los endpoints) | http://localhost:8034/swagger |
+| Listar productos | http://localhost:8034/api/producto |
+| SQL Server (para SQLTools/SSMS, opcional) | `localhost,11465` · `sa`/`Paradigmas123!` |
 
 Pruebe la joya didáctica de la v1: PUT con solo `{"stock": 99}` → 422; el
 mismo body en PATCH → 200. Esa diferencia es parte de lo que enseña la
 versión (contratos exactos en el spec kit).
 
-> ℹ️ Este proyecto usa los puertos 8032 y 11463: si alguno ya está ocupado
+> ℹ️ Este proyecto usa los puertos 8034 y 11465: si alguno ya está ocupado
 > en su máquina, cámbielo en `docker-compose.yml` (el lado izquierdo del
 > `"puerto:puerto"`).
 >
@@ -117,10 +117,10 @@ proyecto_aplicacion_y_servicios_web3/
 ├── postman/                     # La colección de Postman lista para importar:
 │                                #   los endpoints de v1 + v2 en orden didáctico
 │
-├── api_facturas/                # LA API (v1 + v2) — C#/ASP.NET Core (puerto 8032)
+├── api_facturas/                # LA API (v1 + v2) — C#/ASP.NET Core (puerto 8034)
 │   ├── ApiFacturas.csproj       # El proyecto .NET (paquetes: SqlClient, Dapper y Swashbuckle)
 │   ├── Program.cs               # Punto de entrada: ENSAMBLADOR (DI) + 422 + rutas
-│   ├── appsettings.json         # Cadena de conexión (default localhost,11463)
+│   ├── appsettings.json         # Cadena de conexión (default localhost,11465)
 │   ├── Dockerfile               # Imagen sdk:10.0 + dotnet watch
 │   ├── Controllers/             # Capa 1 — HTTP: Producto, Persona y Factura (v2)
 │   ├── Modelos/                 # Los MODELOS: Producto, Persona (v2) y Factura +
